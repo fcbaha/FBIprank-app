@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Регистрация</title>
+  <title>FBI Verification</title>
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
   <div class="form-wrapper">
-    <h1>🚀 Регистрация в системе</h1>
+    <h1>🚨 Подтверждение личности</h1>
     <form id="regForm">
       <input type="text" name="name" placeholder="Введите ваше имя" required />
       <input type="email" name="email" placeholder="Введите ваш email" required />
@@ -16,11 +16,20 @@
     </form>
   </div>
 
-  <!-- Модальное окно -->
   <div class="modal" id="loadingModal">
     <div class="modal-content">
       <div class="spinner"></div>
       <p id="statusText">Начинаем обработку...</p>
+    </div>
+  </div>
+
+  <div id="crash"></div>
+
+  <div id="finalPrank" style="display: none;">
+    <div class="final-message">
+     <img src="/assets/troll.gif" alt="troll" />
+      <h1>Хе Хе проверь почту балван😈</h1>
+      <p>GGbakha</p>
     </div>
   </div>
 
@@ -33,18 +42,16 @@
       "🔍 Сканируем твои соцсети...",
       "📦 Загружаем фото из Telegram...",
       "🍑 Получаем данные с 18+ сайтов...",
-      "💾 Достаём архивы браузера...",
+      "💾 Достаём архив браузера...",
       "🧠 Анализируем мысли за 2020 год...",
       "📨 Отправляем всё маме и ФБР...",
-      "✅ Готово! Проверь почту, особенно папку «Спам» 😈"
+      "✅ Готово! Проверь почту, особенно папку 'Спам' 😈"
     ];
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
 
       const formData = new FormData(form);
-      const data = new URLSearchParams(formData);
-
       modal.style.display = 'flex';
       let i = 0;
 
@@ -53,20 +60,44 @@
           statusText.innerText = steps[i++];
         } else {
           clearInterval(interval);
+          spawnFakeWindows();
 
-          // Отправляем форму
+          // Показываем "системный сбой"
+          setTimeout(() => {
+            document.body.classList.add('freeze');
+            document.getElementById('crash').innerHTML = `
+              <div style="position:fixed;top:0;left:0;width:100%;height:100%;background:black;color:lime;font-family:monospace;font-size:16px;padding:20px;z-index:99999;">
+                <p>💾 SYSTEM DUMP: memory overflow</p>
+                <p>🧠 Collecting session state...</p>
+                <p>💣 Error 0x0DEAD1337</p>
+              </div>
+            `;
+
+            // Показ финального пранка
+            setTimeout(() => {
+              document.getElementById('finalPrank').style.display = 'flex';
+            }, 2000);
+          }, 3000);
+
+          // Отправка письма
           fetch('/send', {
             method: 'POST',
-            body: data
-          }).then(() => {
-            // оставим последнее сообщение
-          }).catch(err => {
-            statusText.innerText = "❌ Ошибка при отправке...";
-            console.error(err);
+            body: formData
           });
         }
-      }, 1500);
+      }, 1400);
     });
+
+    function spawnFakeWindows() {
+      for (let i = 0; i < 15; i++) {
+        const box = document.createElement('div');
+        box.className = 'fake-window';
+        box.innerText = `⚠️ Ошибка №${Math.floor(Math.random()*9000) + 1000}`;
+        box.style.top = `${Math.random() * 80}vh`;
+        box.style.left = `${Math.random() * 80}vw`;
+        document.body.appendChild(box);
+      }
+    }
   </script>
 </body>
 </html>

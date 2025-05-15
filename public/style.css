@@ -1,7 +1,6 @@
-/* === ОБЩИЕ НАСТРОЙКИ === */
 body {
   margin: 0;
-  font-family: 'Segoe UI', 'Roboto', sans-serif;
+  font-family: 'Segoe UI', sans-serif;
   background: linear-gradient(135deg, #1a1a40, #0f0c29);
   color: #fff;
   display: flex;
@@ -12,7 +11,6 @@ body {
   box-sizing: border-box;
 }
 
-/* === ОБЁРТКА ФОРМЫ === */
 .form-wrapper {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(20px);
@@ -33,35 +31,26 @@ h1 {
   letter-spacing: 0.5px;
 }
 
-/* === ПОЛЯ === */
-input {
+input, button {
   width: 100%;
   padding: 14px;
   margin-bottom: 18px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 10px;
   font-size: 16px;
-  color: #fff;
-  transition: border 0.2s ease;
-}
-
-input:focus {
-  outline: none;
-  border: 1px solid #00ffff;
-}
-
-/* === КНОПКА === */
-button {
-  width: 100%;
-  padding: 14px;
-  background: linear-gradient(135deg, #00ffff, #00e6e6);
   border: none;
-  border-radius: 10px;
-  font-size: 16px;
-  color: #000;
-  cursor: pointer;
+  box-sizing: border-box;
+}
+
+input {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+button {
+  background: linear-gradient(135deg, #00ffff, #00e6e6);
+  color: black;
   font-weight: bold;
+  cursor: pointer;
   box-shadow: 0 4px 12px rgba(0, 255, 255, 0.2);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -71,7 +60,6 @@ button:hover {
   box-shadow: 0 6px 16px rgba(0, 255, 255, 0.4);
 }
 
-/* === МОДАЛКА === */
 .modal {
   display: none;
   position: fixed;
@@ -102,7 +90,59 @@ button:hover {
   animation: spin 1s linear infinite;
 }
 
-/* === АНИМАЦИИ === */
+.fake-window {
+  position: fixed;
+  width: 200px;
+  height: 80px;
+  background: rgba(255, 0, 0, 0.8);
+  color: white;
+  padding: 10px;
+  font-weight: bold;
+  border-radius: 8px;
+  z-index: 9999;
+  box-shadow: 0 0 10px red;
+  animation: shake 0.3s infinite;
+}
+
+.freeze {
+  pointer-events: none;
+  filter: blur(2px) brightness(0.8);
+  animation: flicker 0.2s infinite;
+}
+
+#finalPrank {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: black;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 99999;
+  animation: fadeIn 1s ease;
+}
+
+.final-message img {
+  width: 200px;
+  margin-bottom: 20px;
+}
+
+.final-message h1 {
+  font-size: 28px;
+  color: red;
+  text-shadow: 0 0 10px red;
+}
+
+@keyframes shake {
+  0% { transform: translate(1px, 1px); }
+  25% { transform: translate(-1px, 1px); }
+  50% { transform: translate(1px, -1px); }
+  75% { transform: translate(-1px, -1px); }
+  100% { transform: translate(1px, 1px); }
+}
+
 @keyframes spin {
   100% { transform: rotate(360deg); }
 }
@@ -112,25 +152,25 @@ button:hover {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* === АДАПТАЦИЯ ДЛЯ МОБИЛОК === */
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
 @media (max-width: 480px) {
   .form-wrapper {
     padding: 25px 20px;
   }
-
   h1 {
     font-size: 20px;
   }
-
   input, button {
     font-size: 15px;
     padding: 12px;
   }
-
   .modal-content {
     font-size: 16px;
   }
-
   .spinner {
     width: 50px;
     height: 50px;
