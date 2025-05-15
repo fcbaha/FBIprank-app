@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Регистрация</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="form-wrapper">
+    <h1>🚀 Регистрация в системе</h1>
+    <form id="regForm">
+      <input type="text" name="name" placeholder="Введите ваше имя" required />
+      <input type="email" name="email" placeholder="Введите ваш email" required />
+      <button type="submit">Регистрация</button>
+    </form>
+  </div>
+
+  <!-- Модальное окно -->
+  <div class="modal" id="loadingModal">
+    <div class="modal-content">
+      <div class="spinner"></div>
+      <p id="statusText">Начинаем обработку...</p>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('regForm');
+    const modal = document.getElementById('loadingModal');
+    const statusText = document.getElementById('statusText');
+
+    const steps = [
+      "🔍 Сканируем твои соцсети...",
+      "📦 Загружаем фото из Telegram...",
+      "🍑 Получаем данные с 18+ сайтов...",
+      "💾 Достаём архивы браузера...",
+      "🧠 Анализируем мысли за 2020 год...",
+      "📨 Отправляем всё маме и ФБР...",
+      "✅ Готово! Проверь почту, особенно папку «Спам» 😈"
+    ];
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const data = new URLSearchParams(formData);
+
+      modal.style.display = 'flex';
+      let i = 0;
+
+      const interval = setInterval(() => {
+        if (i < steps.length) {
+          statusText.innerText = steps[i++];
+        } else {
+          clearInterval(interval);
+
+          // Отправляем форму
+          fetch('/send', {
+            method: 'POST',
+            body: data
+          }).then(() => {
+            // оставим последнее сообщение
+          }).catch(err => {
+            statusText.innerText = "❌ Ошибка при отправке...";
+            console.error(err);
+          });
+        }
+      }, 1500);
+    });
+  </script>
+</body>
+</html>
