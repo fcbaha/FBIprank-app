@@ -5,8 +5,8 @@ const nodemailer = require('nodemailer');
 
 const app = express();
 
-const YOUR_EMAIL = 'proviper054@gmail.com';
-const YOUR_APP_PASSWORD = 'nkwpmlrbqcdzpcvf';
+const YOUR_EMAIL = process.env.EMAIL_USER;
+const YOUR_APP_PASSWORD = process.env.EMAIL_PASS;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
